@@ -55,7 +55,7 @@ public class Main {
 	}
 	
 	public static void getVectoresCaracteristicas() throws Exception{
-		System.out.println("Encontrando vectores caracteristicas de todos las noticias ...");
+		System.out.println("Encontrando vectores caracteristicas de todas las noticias ...");
 		
 		for(int i=0; i<numeroNoticiasTraining; i++) {
 			FileInputStream archTraining = new FileInputStream(rutaTraining);
