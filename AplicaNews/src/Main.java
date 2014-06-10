@@ -44,9 +44,7 @@ public class Main {
 	static double [][] matrizCaracteristicasMoneyFx = new double[numeroMoneyFxTraining][numeroCaracteristicas];
 	static double [][] matrizCaracteristicasShip = new double[numeroShipTraining][numeroCaracteristicas];
 	static double [][] matrizCaracteristicasTrade = new double[numeroTradeTraining][numeroCaracteristicas];
-	
-	
-	
+		
 	public static void main(String[] args) throws Exception{
 		getListaClaves();
 		getVectoresCaracteristicas();
