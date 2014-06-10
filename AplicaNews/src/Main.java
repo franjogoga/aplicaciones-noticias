@@ -1,5 +1,9 @@
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -32,6 +36,14 @@ public class Main {
 	static int numeroMoneyFxTraining=206;
 	static int numeroShipTraining=108;
 	static int numeroTradeTraining=251;
+	static double [][] matrizCaracteristicasAcq = new double[numeroAcqTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasCrude = new double[numeroCrudeTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasEarn = new double[numeroEarnTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasGrain = new double[numeroGrainTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasInterest = new double[numeroInterestTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasMoneyFx = new double[numeroMoneyFxTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasShip = new double[numeroShipTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTrade = new double[numeroTradeTraining][numeroCaracteristicas];
 	
 	
 	
@@ -42,11 +54,19 @@ public class Main {
 
 	}
 	
-	public static void getVectoresCaracteristicas() {
+	public static void getVectoresCaracteristicas() throws Exception{
 		System.out.println("Encontrando vectores caracteristicas de todos las noticias ...");
 		
 		for(int i=0; i<numeroNoticiasTraining; i++) {
-			
+			FileInputStream archTraining = new FileInputStream(rutaTraining);
+			DataInputStream entrada = new DataInputStream(archTraining);
+			BufferedReader buffer = new BufferedReader(new InputStreamReader(entrada));			
+			String strLinea;
+
+			while ((strLinea = buffer.readLine()) != null) {
+				
+			}						
+			entrada.close();			
 		}				
 	}
 	
