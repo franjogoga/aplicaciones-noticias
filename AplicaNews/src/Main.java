@@ -26,7 +26,22 @@ public class Main {
 		getClases();
 		System.out.println("Encontrando caracteristicas (palabras mas frecuentes) ...");
 		
+		File trainingArch = new File(rutaTraining);		
+		Scanner trainingScanArch = new Scanner(new FileReader(trainingArch));
+		String palabra;
 		
+		while (trainingScanArch.hasNext()){		
+		    palabra = trainingScanArch.next();
+		    palabra = palabra.toLowerCase();
+		    
+		    if (!clasesList.contains(palabra)) {
+			    if(palabras.containsKey(palabra))
+			    	palabras.put(palabra, palabras.get(palabra)+1);		    
+			    else 
+			    	palabras.put(palabra, 1);		
+		    }
+		}				
+		trainingScanArch.close();			
 	}
 	
 	public static void getClases() throws Exception {
