@@ -23,12 +23,31 @@ public class Main {
 	static String rutaTest=workspace + "r8-test-stemmed.txt";
 	static String rutaClases=workspace + "clases_noticias.txt";
 	static int numeroCaracteristicas = 5;
+	static int numeroNoticiasTraining=5485;
+	static int numeroAcqTraining=1596;
+	static int numeroCrudeTraining=253;
+	static int numeroEarnTraining=2840;
+	static int numeroGrainTraining=41;
+	static int numeroInterestTraining=190;
+	static int numeroMoneyFxTraining=206;
+	static int numeroShipTraining=108;
+	static int numeroTradeTraining=251;
 	
 	
 	
 	public static void main(String[] args) throws Exception{
 		getListaClaves();
+		getVectoresCaracteristicas();
+		
 
+	}
+	
+	public static void getVectoresCaracteristicas() {
+		System.out.println("Encontrando vectores caracteristicas de todos las noticias ...");
+		
+		for(int i=0; i<numeroNoticiasTraining; i++) {
+			
+		}				
 	}
 	
 	public static void getListaClaves() throws Exception{
@@ -51,8 +70,7 @@ public class Main {
 		    }
 		}				
 		trainingScanArch.close();	
-		
-		
+				
 		LinkedHashMap<String, Integer> palabrasOrdenado= ordenarPorValores(palabras);
 		Iterator<String> iterator = palabrasOrdenado.keySet().iterator();
 	
@@ -61,11 +79,7 @@ public class Main {
 		   String frecuencia = palabrasOrdenado.get(clave).toString();		   
 		   clavesList.add(clave);
 		   System.out.println("  Palabra Clave: "+clave + " " + "\t\tFrecuencia: "+frecuencia);		   		   
-		}  		
-		
-		
-		
-		
+		}  									
 	}
 	
 	public static void getClases() throws Exception {
