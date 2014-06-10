@@ -26,7 +26,7 @@ public class Main {
 	static String rutaTraining=workspace + "r8-train-stemmed.txt";
 	static String rutaTest=workspace + "r8-test-stemmed.txt";
 	static String rutaClases=workspace + "clases_noticias.txt";
-	static int numeroCaracteristicas = 5;
+	static int numeroCaracteristicas = 30;
 	static int numeroNoticiasTraining=5485;
 	static int numeroAcqTraining=1596;
 	static int numeroCrudeTraining=253;
@@ -54,18 +54,39 @@ public class Main {
 	
 	public static void getVectoresCaracteristicas() throws Exception{
 		System.out.println("Encontrando vectores caracteristicas de todas las noticias ...");
-		
-		for(int i=0; i<numeroNoticiasTraining; i++) {
-			FileInputStream archTraining = new FileInputStream(rutaTraining);
-			DataInputStream entrada = new DataInputStream(archTraining);
-			BufferedReader buffer = new BufferedReader(new InputStreamReader(entrada));			
-			String strLinea;
-
-			while ((strLinea = buffer.readLine()) != null) {
+		int indice, cuentaAcq=0, cuentaCrude=0, cuentaEarn=0, cuentaGrain=0, cuentaInterest=0, cuentaMoneyFx=0, cuentaShip=0, cuentsTrade=0;
+		FileInputStream archTraining = new FileInputStream(rutaTraining);
+		DataInputStream entrada = new DataInputStream(archTraining);
+		BufferedReader buffer = new BufferedReader(new InputStreamReader(entrada));	
+		String strLinea;
+		for(int i=0; i<numeroNoticiasTraining && (strLinea = buffer.readLine()) != null; i++) {										
+			if(strLinea.contains(clasesList.get(0)+"\t")) {
 				
-			}						
-			entrada.close();			
-		}				
+			}
+			if(strLinea.contains(clasesList.get(1)+"\t")) {
+							//
+			}
+			if(strLinea.contains(clasesList.get(2)+"\t")) {
+				
+			}
+			if(strLinea.contains(clasesList.get(3)+"\t")) {
+				
+			}
+			if(strLinea.contains(clasesList.get(4)+"\t")) {
+				
+			}
+			if(strLinea.contains(clasesList.get(5)+"\t")) {
+				
+			}
+			if(strLinea.contains(clasesList.get(6)+"\t")) {
+				
+			}
+			if(strLinea.contains(clasesList.get(7)+"\t")) {
+				
+			}
+			
+		}
+		entrada.close();
 	}
 	
 	public static void getListaClaves() throws Exception{
