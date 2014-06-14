@@ -26,7 +26,7 @@ public class Main {
 	static String rutaTraining=workspace + "r8-train-stemmed.txt";
 	static String rutaTest=workspace + "r8-test-stemmed.txt";
 	static String rutaClases=workspace + "clases_noticias.txt";
-	static int numeroCaracteristicas = 30;
+	static int numeroCaracteristicas = 20;
 	static int numeroNoticiasTraining=5485;
 	static int numeroAcqTraining=1596;
 	static int numeroCrudeTraining=253;
@@ -64,7 +64,7 @@ public class Main {
 				
 			}
 			if(strLinea.contains(clasesList.get(1)+"\t")) {
-							//
+				
 			}
 			if(strLinea.contains(clasesList.get(2)+"\t")) {
 				
