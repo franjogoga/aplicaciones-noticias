@@ -13,8 +13,11 @@ import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Map.Entry;
+
+import org.apache.commons.lang3.StringUtils;
 
 
 public class Main {
@@ -44,47 +47,131 @@ public class Main {
 	static double [][] matrizCaracteristicasMoneyFx = new double[numeroMoneyFxTraining][numeroCaracteristicas];
 	static double [][] matrizCaracteristicasShip = new double[numeroShipTraining][numeroCaracteristicas];
 	static double [][] matrizCaracteristicasTrade = new double[numeroTradeTraining][numeroCaracteristicas];
-		
+	static double [][] vectorMediaAcq = new double[numeroCaracteristicas][1];
+	static double [][] vectorMediaCrude = new double[numeroCaracteristicas][1];
+	static double [][] vectorMediaEarn = new double[numeroCaracteristicas][1];
+	static double [][] vectorMediaGrain = new double[numeroCaracteristicas][1];
+	static double [][] vectorMediaInterest = new double[numeroCaracteristicas][1];
+	static double [][] vectorMediaMoneyFx = new double[numeroCaracteristicas][1];
+	static double [][] vectorMediaShip = new double[numeroCaracteristicas][1];
+	static double [][] vectorMediaTrade = new double[numeroCaracteristicas][1];
+	
+	
 	public static void main(String[] args) throws Exception{
 		getListaClaves();
 		getVectoresCaracteristicas();
-		
+		getVectoresMedia();
 
+	}
+	
+	public static void getVectoresMedia() {
+		System.out.println("Encontrando vectores media ...");
+		for(int i=0; i<numeroCaracteristicas; i++)
+			vectorMediaAcq[i][0]=0;
+		
+		for(int i=0; i<numeroCaracteristicas; i++)
+			vectorMediaCrude[i][0]=0;
+		
+		for(int i=0; i<numeroCaracteristicas; i++)
+			vectorMediaEarn[i][0]=0;
+		
+		for(int i=0; i<numeroCaracteristicas; i++)
+			vectorMediaGrain[i][0]=0;
+		
+		for(int i=0; i<numeroCaracteristicas; i++)
+			vectorMediaInterest[i][0]=0;
+		
+		for(int i=0; i<numeroCaracteristicas; i++)
+			vectorMediaMoneyFx[i][0]=0;
+		
+		for(int i=0; i<numeroCaracteristicas; i++)
+			vectorMediaShip[i][0]=0;
+		
+		for(int i=0; i<numeroCaracteristicas; i++)
+			vectorMediaTrade[i][0]=0;
+		
+		//
+		for(int i=0; i<numeroAcqTraining; i++) {
+			for(int j=0; j<numeroCaracteristicas; j++) {
+				vectorMediaAcq[j][0]=vectorMediaAcq[j][0]+matrizCaracteristicasAcq[i][j];
+			}
+		}
+		
+		for(int i=0; i<numeroCrudeTraining; i++) {
+			for(int j=0; j<numeroCaracteristicas; j++) {
+				vectorMediaCrude[j][0]=vectorMediaCrude[j][0]+matrizCaracteristicasCrude[i][j];
+			}
+		}
+		
+		for(int i=0; i<numeroEarnTraining; i++) {
+			for(int j=0; j<numeroCaracteristicas; j++) {
+				vectorMediaEarn[j][0]=vectorMediaEarn[j][0]+matrizCaracteristicasEarn[i][j];
+			}
+		}
+		
+		for(int i=0; i<numeroGrainTraining; i++) {
+			for(int j=0; j<numeroCaracteristicas; j++) {
+				vectorMediaGrain[j][0]=vectorMediaGrain[j][0]+matrizCaracteristicasGrain[i][j];
+			}
+		}
+		
+		for(int i=0; i<numeroInterestTraining; i++) {
+			for(int j=0; j<numeroCaracteristicas; j++) {
+				vectorMediaInterest[j][0]=vectorMediaInterest[j][0]+matrizCaracteristicasInterest[i][j];
+			}
+		}
+		
 	}
 	
 	public static void getVectoresCaracteristicas() throws Exception{
 		System.out.println("Encontrando vectores caracteristicas de todas las noticias ...");
-		int indice, cuentaAcq=0, cuentaCrude=0, cuentaEarn=0, cuentaGrain=0, cuentaInterest=0, cuentaMoneyFx=0, cuentaShip=0, cuentsTrade=0;
+		int cuentaAcq=0, cuentaCrude=0, cuentaEarn=0, cuentaGrain=0, cuentaInterest=0, cuentaMoneyFx=0, cuentaShip=0, cuentaTrade=0;
 		FileInputStream archTraining = new FileInputStream(rutaTraining);
 		DataInputStream entrada = new DataInputStream(archTraining);
 		BufferedReader buffer = new BufferedReader(new InputStreamReader(entrada));	
 		String strLinea;
+		Random r = new Random();
 		for(int i=0; i<numeroNoticiasTraining && (strLinea = buffer.readLine()) != null; i++) {										
-			if(strLinea.contains(clasesList.get(0)+"\t")) {
-				
+			if(strLinea.contains(clasesList.get(0)+"\t")) {				
+				for(int j=0; i<numeroCaracteristicas; j++)
+					matrizCaracteristicasAcq[cuentaAcq][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaAcq++;
 			}
 			if(strLinea.contains(clasesList.get(1)+"\t")) {
-				
+				for(int j=0; i<numeroCaracteristicas; j++)
+					matrizCaracteristicasCrude[cuentaCrude][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaCrude++;
 			}
 			if(strLinea.contains(clasesList.get(2)+"\t")) {
-				
+				for(int j=0; i<numeroCaracteristicas; j++)
+					matrizCaracteristicasEarn[cuentaEarn][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaEarn++;
 			}
 			if(strLinea.contains(clasesList.get(3)+"\t")) {
-				
+				for(int j=0; i<numeroCaracteristicas; j++)
+					matrizCaracteristicasGrain[cuentaGrain][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaGrain++;
 			}
 			if(strLinea.contains(clasesList.get(4)+"\t")) {
-				
+				for(int j=0; i<numeroCaracteristicas; j++)
+					matrizCaracteristicasInterest[cuentaInterest][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaInterest++;
 			}
 			if(strLinea.contains(clasesList.get(5)+"\t")) {
-				
+				for(int j=0; i<numeroCaracteristicas; j++)
+					matrizCaracteristicasMoneyFx[cuentaMoneyFx][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaMoneyFx++;
 			}
 			if(strLinea.contains(clasesList.get(6)+"\t")) {
-				
+				for(int j=0; i<numeroCaracteristicas; j++)
+					matrizCaracteristicasShip[cuentaShip][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaShip++;
 			}
 			if(strLinea.contains(clasesList.get(7)+"\t")) {
-				
+				for(int j=0; i<numeroCaracteristicas; j++)
+					matrizCaracteristicasTrade[cuentaTrade][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaTrade++;
 			}
-			
 		}
 		entrada.close();
 	}
