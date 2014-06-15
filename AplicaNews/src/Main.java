@@ -121,6 +121,17 @@ public class Main {
 			}
 		}
 		
+		for(int i=0; i<numeroShipTraining; i++) {
+			for(int j=0; j<numeroCaracteristicas; j++) {
+				vectorMediaShip[j][0]=vectorMediaShip[j][0]+matrizCaracteristicasShip[i][j];
+			}
+		}
+		
+		for(int i=0; i<numeroTradeTraining; i++) {
+			for(int j=0; j<numeroCaracteristicas; j++) {
+				vectorMediaTrade[j][0]=vectorMediaTrade[j][0]+matrizCaracteristicasTrade[i][j];
+			}
+		}			
 	}
 	
 	public static void getVectoresCaracteristicas() throws Exception{
