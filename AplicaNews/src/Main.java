@@ -144,44 +144,52 @@ public class Main {
 		Random r = new Random();
 		for(int i=0; i<numeroNoticiasTraining && (strLinea = buffer.readLine()) != null; i++) {										
 			if(strLinea.contains(clasesList.get(0)+"\t")) {				
-				for(int j=0; i<numeroCaracteristicas; j++)
+				for(int j=0; j<numeroCaracteristicas; j++)
 					matrizCaracteristicasAcq[cuentaAcq][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaAcq++;
+				continue;
 			}
 			if(strLinea.contains(clasesList.get(1)+"\t")) {
-				for(int j=0; i<numeroCaracteristicas; j++)
+				for(int j=0; j<numeroCaracteristicas; j++)
 					matrizCaracteristicasCrude[cuentaCrude][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaCrude++;
+				continue;
 			}
 			if(strLinea.contains(clasesList.get(2)+"\t")) {
-				for(int j=0; i<numeroCaracteristicas; j++)
+				for(int j=0; j<numeroCaracteristicas; j++)
 					matrizCaracteristicasEarn[cuentaEarn][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaEarn++;
+				continue;
 			}
 			if(strLinea.contains(clasesList.get(3)+"\t")) {
-				for(int j=0; i<numeroCaracteristicas; j++)
+				for(int j=0; j<numeroCaracteristicas; j++)
 					matrizCaracteristicasGrain[cuentaGrain][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaGrain++;
+				continue;
 			}
 			if(strLinea.contains(clasesList.get(4)+"\t")) {
-				for(int j=0; i<numeroCaracteristicas; j++)
+				for(int j=0; j<numeroCaracteristicas; j++)
 					matrizCaracteristicasInterest[cuentaInterest][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaInterest++;
+				continue;
 			}
 			if(strLinea.contains(clasesList.get(5)+"\t")) {
-				for(int j=0; i<numeroCaracteristicas; j++)
+				for(int j=0; j<numeroCaracteristicas; j++)
 					matrizCaracteristicasMoneyFx[cuentaMoneyFx][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaMoneyFx++;
+				continue;
 			}
 			if(strLinea.contains(clasesList.get(6)+"\t")) {
-				for(int j=0; i<numeroCaracteristicas; j++)
+				for(int j=0; j<numeroCaracteristicas; j++)
 					matrizCaracteristicasShip[cuentaShip][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaShip++;
+				continue;
 			}
 			if(strLinea.contains(clasesList.get(7)+"\t")) {
-				for(int j=0; i<numeroCaracteristicas; j++)
+				for(int j=0; j<numeroCaracteristicas; j++)
 					matrizCaracteristicasTrade[cuentaTrade][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaTrade++;
+				continue;
 			}
 		}
 		entrada.close();
