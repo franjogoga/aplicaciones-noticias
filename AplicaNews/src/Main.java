@@ -18,7 +18,11 @@ import java.util.Scanner;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.math3.linear.RealMatrix;
+import org.apache.commons.math3.stat.correlation.Covariance;
 
+import Jama.Matrix;
+import pca_transform.*;
 
 public class Main {
 
@@ -55,13 +59,75 @@ public class Main {
 	static double [][] vectorMediaMoneyFx = new double[numeroCaracteristicas][1];
 	static double [][] vectorMediaShip = new double[numeroCaracteristicas][1];
 	static double [][] vectorMediaTrade = new double[numeroCaracteristicas][1];
-	
-	
+	static double [][] matrizCovarianzaAcq;
+	static double [][] matrizCovarianzaCrude;
+	static double [][] matrizCovarianzaEarn;
+	static double [][] matrizCovarianzaGrain;
+	static double [][] matrizCovarianzaInterest;
+	static double [][] matrizCovarianzaMoneyFx;
+	static double [][] matrizCovarianzaShip;
+	static double [][] matrizCovarianzaTrade;
+		
 	public static void main(String[] args) throws Exception{
-		getListaClaves();
-		getVectoresCaracteristicas();
-		getVectoresMedia();
-
+		//getListaClaves();
+		//getVectoresCaracteristicas();
+		//getVectoresMedia();
+		//getMatricesCovarianza();
+		
+		System.out.println("Running a demonstrational program on some sample data ...");
+        Matrix trainingData = new Matrix(new double[][] {
+            {1, 2, 3, 4, 5, 6},
+            {6, 5, 4, 3, 2, 1},
+            {2, 2, 2, 2, 2, 2}});
+        PCA pca = new PCA(trainingData);
+        Matrix testData = new Matrix(new double[][] {
+        		 {1, 2, 1, 2, 1, 2}});
+        Matrix transformedData =
+            pca.transform(trainingData, PCA.TransformationType.WHITENING);
+        System.out.println("Transformed data:");
+        for(int r = 0; r < transformedData.getRowDimension(); r++){
+            for(int c = 0; c < transformedData.getColumnDimension(); c++){
+                System.out.print(transformedData.get(r, c));
+                if (c == transformedData.getColumnDimension()-1) continue;
+                System.out.print(", ");
+            }
+            System.out.println("");
+        }
+	}
+	
+	public static void getMatricesCovarianza() {
+		System.out.println("Encontrando matrices covarianza ...");
+		Covariance covarianzaAcq = new Covariance(matrizCaracteristicasAcq, false);
+		RealMatrix realCovarianzaAcq = covarianzaAcq.getCovarianceMatrix();
+    	matrizCovarianzaAcq = realCovarianzaAcq.getData();
+		
+    	Covariance covarianzaCrude = new Covariance(matrizCaracteristicasCrude, false);
+		RealMatrix realCovarianzaCrude = covarianzaCrude.getCovarianceMatrix();
+    	matrizCovarianzaCrude = realCovarianzaCrude.getData();
+    	
+    	Covariance covarianzaEarn = new Covariance(matrizCaracteristicasEarn, false);
+		RealMatrix realCovarianzaEarn = covarianzaEarn.getCovarianceMatrix();
+    	matrizCovarianzaEarn = realCovarianzaEarn.getData();
+    	
+    	Covariance covarianzaGrain = new Covariance(matrizCaracteristicasGrain, false);
+		RealMatrix realCovarianzaGrain = covarianzaGrain.getCovarianceMatrix();
+    	matrizCovarianzaGrain = realCovarianzaGrain.getData();
+    	
+    	Covariance covarianzaInterest = new Covariance(matrizCaracteristicasInterest, false);
+		RealMatrix realCovarianzaInterest = covarianzaInterest.getCovarianceMatrix();
+    	matrizCovarianzaInterest = realCovarianzaInterest.getData();
+    	
+    	Covariance covarianzaMoneyFx = new Covariance(matrizCaracteristicasMoneyFx, false);
+		RealMatrix realCovarianzaMoneyFx = covarianzaMoneyFx.getCovarianceMatrix();
+    	matrizCovarianzaMoneyFx = realCovarianzaMoneyFx.getData();
+    	
+    	Covariance covarianzaShip = new Covariance(matrizCaracteristicasShip, false);
+		RealMatrix realCovarianzaShip = covarianzaShip.getCovarianceMatrix();
+    	matrizCovarianzaShip = realCovarianzaShip.getData();
+    	
+    	Covariance covarianzaTrade = new Covariance(matrizCaracteristicasTrade, false);
+		RealMatrix realCovarianzaTrade = covarianzaTrade.getCovarianceMatrix();
+    	matrizCovarianzaTrade = realCovarianzaTrade.getData();
 	}
 	
 	public static void getVectoresMedia() {
