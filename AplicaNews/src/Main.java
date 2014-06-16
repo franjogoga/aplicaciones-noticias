@@ -33,7 +33,7 @@ public class Main {
 	static String rutaTraining=workspace + "r8-train-stemmed.txt";
 	static String rutaTest=workspace + "r8-test-stemmed.txt";
 	static String rutaClases=workspace + "clases_noticias.txt";
-	static int numeroCaracteristicas = 20;
+	static int numeroCaracteristicas = 300;
 	static int numeroNoticiasTraining=5485;
 	static int numeroAcqTraining=1596;
 	static int numeroCrudeTraining=253;
@@ -69,16 +69,13 @@ public class Main {
 	static double [][] matrizCovarianzaTrade;
 		
 	public static void main(String[] args) throws Exception{
-		//getListaClaves();
-		//getVectoresCaracteristicas();
+		getListaClaves();
+		getVectoresCaracteristicas();
 		//getVectoresMedia();
 		//getMatricesCovarianza();
 		
 		System.out.println("Running a demonstrational program on some sample data ...");
-        Matrix trainingData = new Matrix(new double[][] {
-            {1, 2, 3, 4, 5, 6},
-            {6, 5, 4, 3, 2, 1},
-            {2, 2, 2, 2, 2, 2}});
+        Matrix trainingData = new Matrix(matrizCaracteristicasAcq);
         PCA pca = new PCA(trainingData);
         Matrix testData = new Matrix(new double[][] {
         		 {1, 2, 1, 2, 1, 2}});
@@ -86,8 +83,9 @@ public class Main {
             pca.transform(trainingData, PCA.TransformationType.WHITENING);
         System.out.println("Transformed data:");
         for(int r = 0; r < transformedData.getRowDimension(); r++){
+        	System.out.println("linea"+r+":");
             for(int c = 0; c < transformedData.getColumnDimension(); c++){
-                System.out.print(transformedData.get(r, c));
+                System.out.print("c"+ c+":"+transformedData.get(r, c));
                 if (c == transformedData.getColumnDimension()-1) continue;
                 System.out.print(", ");
             }
