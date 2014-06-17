@@ -43,14 +43,14 @@ public class Main {
 	static int numeroMoneyFxTraining=206;
 	static int numeroShipTraining=108;
 	static int numeroTradeTraining=251;
-	static double [][] matrizCaracteristicasAcq = new double[numeroAcqTraining][numeroCaracteristicas];
-	static double [][] matrizCaracteristicasCrude = new double[numeroCrudeTraining][numeroCaracteristicas];
-	static double [][] matrizCaracteristicasEarn = new double[numeroEarnTraining][numeroCaracteristicas];
-	static double [][] matrizCaracteristicasGrain = new double[numeroGrainTraining][numeroCaracteristicas];
-	static double [][] matrizCaracteristicasInterest = new double[numeroInterestTraining][numeroCaracteristicas];
-	static double [][] matrizCaracteristicasMoneyFx = new double[numeroMoneyFxTraining][numeroCaracteristicas];
-	static double [][] matrizCaracteristicasShip = new double[numeroShipTraining][numeroCaracteristicas];
-	static double [][] matrizCaracteristicasTrade = new double[numeroTradeTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTrainAcq = new double[numeroAcqTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTrainCrude = new double[numeroCrudeTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTrainEarn = new double[numeroEarnTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTrainGrain = new double[numeroGrainTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTrainInterest = new double[numeroInterestTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTrainMoneyFx = new double[numeroMoneyFxTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTrainShip = new double[numeroShipTraining][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTrainTrade = new double[numeroTradeTraining][numeroCaracteristicas];
 	static double [][] vectorMediaAcq = new double[numeroCaracteristicas][1];
 	static double [][] vectorMediaCrude = new double[numeroCaracteristicas][1];
 	static double [][] vectorMediaEarn = new double[numeroCaracteristicas][1];
@@ -67,63 +67,82 @@ public class Main {
 	static double [][] matrizCovarianzaMoneyFx;
 	static double [][] matrizCovarianzaShip;
 	static double [][] matrizCovarianzaTrade;
-		
+	static int numeroNoticiasTest=2189;
+	static int numeroAcqTest=696;
+	static int numeroCrudeTest=121;
+	static int numeroEarnTest=1083;
+	static int numeroGrainTest=10;
+	static int numeroInterestTest=81;
+	static int numeroMoneyFxTest=87;
+	static int numeroShipTest=36;
+	static int numeroTradeTest=75;
+	static double [][] matrizCaracteristicasTestAcq = new double[numeroAcqTest][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTestCrude = new double[numeroCrudeTest][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTestEarn = new double[numeroEarnTest][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTestGrain = new double[numeroGrainTest][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTestInterest = new double[numeroInterestTest][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTestMoneyFx = new double[numeroMoneyFxTest][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTestShip = new double[numeroShipTest][numeroCaracteristicas];
+	static double [][] matrizCaracteristicasTestTrade = new double[numeroTradeTest][numeroCaracteristicas];	
+	
+	
+	
 	public static void main(String[] args) throws Exception{
 		getListaClaves();
 		getVectoresCaracteristicas();
-		//getVectoresMedia();
-		//getMatricesCovarianza();
+		getVectoresMedia();
+		getMatricesCovarianza();
 		
-		System.out.println("Running a demonstrational program on some sample data ...");
-        Matrix trainingData = new Matrix(matrizCaracteristicasAcq);
-        PCA pca = new PCA(trainingData);
-        Matrix testData = new Matrix(new double[][] {
-        		 {1, 2, 1, 2, 1, 2}});
-        Matrix transformedData =
-            pca.transform(trainingData, PCA.TransformationType.WHITENING);
-        System.out.println("Transformed data:");
-        for(int r = 0; r < transformedData.getRowDimension(); r++){
-        	System.out.println("linea"+r+":");
-            for(int c = 0; c < transformedData.getColumnDimension(); c++){
-                System.out.print("c"+ c+":"+transformedData.get(r, c));
-                if (c == transformedData.getColumnDimension()-1) continue;
-                System.out.print(", ");
-            }
-            System.out.println("");
-        }
+//		System.out.println("Running a demonstrational program on some sample data ...");
+//        Matrix trainingData = new Matrix(matrizCaracteristicasTrainAcq);
+//        PCA pca = new PCA(trainingData);
+//        Matrix testData = new Matrix(new double[][] {
+//        		 {1, 2, 1, 2, 1, 2}});
+//        Matrix transformedData =
+//            pca.transform(trainingData, PCA.TransformationType.WHITENING);
+//        System.out.println("Transformed data:");
+//        for(int r = 0; r < transformedData.getRowDimension(); r++){
+//        	System.out.println("linea"+r+":");
+//            for(int c = 0; c < transformedData.getColumnDimension(); c++){
+//                System.out.print("c"+ c+":"+transformedData.get(r, c));
+//                if (c == transformedData.getColumnDimension()-1) continue;
+//                System.out.print(", ");
+//            }
+//            System.out.println("");
+//        }
 	}
 	
 	public static void getMatricesCovarianza() {
 		System.out.println("Encontrando matrices covarianza ...");
-		Covariance covarianzaAcq = new Covariance(matrizCaracteristicasAcq, false);
+		Covariance covarianzaAcq = new Covariance(matrizCaracteristicasTrainAcq, false);
 		RealMatrix realCovarianzaAcq = covarianzaAcq.getCovarianceMatrix();
     	matrizCovarianzaAcq = realCovarianzaAcq.getData();
 		
-    	Covariance covarianzaCrude = new Covariance(matrizCaracteristicasCrude, false);
+    	Covariance covarianzaCrude = new Covariance(matrizCaracteristicasTrainCrude, false);
 		RealMatrix realCovarianzaCrude = covarianzaCrude.getCovarianceMatrix();
     	matrizCovarianzaCrude = realCovarianzaCrude.getData();
     	
-    	Covariance covarianzaEarn = new Covariance(matrizCaracteristicasEarn, false);
+    	Covariance covarianzaEarn = new Covariance(matrizCaracteristicasTrainEarn, false);
 		RealMatrix realCovarianzaEarn = covarianzaEarn.getCovarianceMatrix();
     	matrizCovarianzaEarn = realCovarianzaEarn.getData();
     	
-    	Covariance covarianzaGrain = new Covariance(matrizCaracteristicasGrain, false);
+    	Covariance covarianzaGrain = new Covariance(matrizCaracteristicasTrainGrain, false);
 		RealMatrix realCovarianzaGrain = covarianzaGrain.getCovarianceMatrix();
     	matrizCovarianzaGrain = realCovarianzaGrain.getData();
     	
-    	Covariance covarianzaInterest = new Covariance(matrizCaracteristicasInterest, false);
+    	Covariance covarianzaInterest = new Covariance(matrizCaracteristicasTrainInterest, false);
 		RealMatrix realCovarianzaInterest = covarianzaInterest.getCovarianceMatrix();
     	matrizCovarianzaInterest = realCovarianzaInterest.getData();
     	
-    	Covariance covarianzaMoneyFx = new Covariance(matrizCaracteristicasMoneyFx, false);
+    	Covariance covarianzaMoneyFx = new Covariance(matrizCaracteristicasTrainMoneyFx, false);
 		RealMatrix realCovarianzaMoneyFx = covarianzaMoneyFx.getCovarianceMatrix();
     	matrizCovarianzaMoneyFx = realCovarianzaMoneyFx.getData();
     	
-    	Covariance covarianzaShip = new Covariance(matrizCaracteristicasShip, false);
+    	Covariance covarianzaShip = new Covariance(matrizCaracteristicasTrainShip, false);
 		RealMatrix realCovarianzaShip = covarianzaShip.getCovarianceMatrix();
     	matrizCovarianzaShip = realCovarianzaShip.getData();
     	
-    	Covariance covarianzaTrade = new Covariance(matrizCaracteristicasTrade, false);
+    	Covariance covarianzaTrade = new Covariance(matrizCaracteristicasTrainTrade, false);
 		RealMatrix realCovarianzaTrade = covarianzaTrade.getCovarianceMatrix();
     	matrizCovarianzaTrade = realCovarianzaTrade.getData();
 	}
@@ -157,43 +176,43 @@ public class Main {
 		//
 		for(int i=0; i<numeroAcqTraining; i++) {
 			for(int j=0; j<numeroCaracteristicas; j++) {
-				vectorMediaAcq[j][0]=vectorMediaAcq[j][0]+matrizCaracteristicasAcq[i][j];
+				vectorMediaAcq[j][0]=vectorMediaAcq[j][0]+matrizCaracteristicasTrainAcq[i][j];
 			}
 		}
 		
 		for(int i=0; i<numeroCrudeTraining; i++) {
 			for(int j=0; j<numeroCaracteristicas; j++) {
-				vectorMediaCrude[j][0]=vectorMediaCrude[j][0]+matrizCaracteristicasCrude[i][j];
+				vectorMediaCrude[j][0]=vectorMediaCrude[j][0]+matrizCaracteristicasTrainCrude[i][j];
 			}
 		}
 		
 		for(int i=0; i<numeroEarnTraining; i++) {
 			for(int j=0; j<numeroCaracteristicas; j++) {
-				vectorMediaEarn[j][0]=vectorMediaEarn[j][0]+matrizCaracteristicasEarn[i][j];
+				vectorMediaEarn[j][0]=vectorMediaEarn[j][0]+matrizCaracteristicasTrainEarn[i][j];
 			}
 		}
 		
 		for(int i=0; i<numeroGrainTraining; i++) {
 			for(int j=0; j<numeroCaracteristicas; j++) {
-				vectorMediaGrain[j][0]=vectorMediaGrain[j][0]+matrizCaracteristicasGrain[i][j];
+				vectorMediaGrain[j][0]=vectorMediaGrain[j][0]+matrizCaracteristicasTrainGrain[i][j];
 			}
 		}
 		
 		for(int i=0; i<numeroInterestTraining; i++) {
 			for(int j=0; j<numeroCaracteristicas; j++) {
-				vectorMediaInterest[j][0]=vectorMediaInterest[j][0]+matrizCaracteristicasInterest[i][j];
+				vectorMediaInterest[j][0]=vectorMediaInterest[j][0]+matrizCaracteristicasTrainInterest[i][j];
 			}
 		}
 		
 		for(int i=0; i<numeroShipTraining; i++) {
 			for(int j=0; j<numeroCaracteristicas; j++) {
-				vectorMediaShip[j][0]=vectorMediaShip[j][0]+matrizCaracteristicasShip[i][j];
+				vectorMediaShip[j][0]=vectorMediaShip[j][0]+matrizCaracteristicasTrainShip[i][j];
 			}
 		}
 		
 		for(int i=0; i<numeroTradeTraining; i++) {
 			for(int j=0; j<numeroCaracteristicas; j++) {
-				vectorMediaTrade[j][0]=vectorMediaTrade[j][0]+matrizCaracteristicasTrade[i][j];
+				vectorMediaTrade[j][0]=vectorMediaTrade[j][0]+matrizCaracteristicasTrainTrade[i][j];
 			}
 		}			
 	}
@@ -209,49 +228,49 @@ public class Main {
 		for(int i=0; i<numeroNoticiasTraining && (strLinea = buffer.readLine()) != null; i++) {										
 			if(strLinea.contains(clasesList.get(0)+"\t")) {				
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasAcq[cuentaAcq][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTrainAcq[cuentaAcq][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaAcq++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(1)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasCrude[cuentaCrude][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTrainCrude[cuentaCrude][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaCrude++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(2)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasEarn[cuentaEarn][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTrainEarn[cuentaEarn][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaEarn++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(3)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasGrain[cuentaGrain][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTrainGrain[cuentaGrain][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaGrain++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(4)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasInterest[cuentaInterest][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTrainInterest[cuentaInterest][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaInterest++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(5)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasMoneyFx[cuentaMoneyFx][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTrainMoneyFx[cuentaMoneyFx][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaMoneyFx++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(6)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasShip[cuentaShip][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTrainShip[cuentaShip][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaShip++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(7)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasTrade[cuentaTrade][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTrainTrade[cuentaTrade][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaTrade++;
 				continue;
 			}
