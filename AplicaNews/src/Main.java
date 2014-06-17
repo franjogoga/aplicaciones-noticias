@@ -18,6 +18,9 @@ import java.util.Scanner;
 import java.util.Map.Entry;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.math3.analysis.function.Log;
+import org.apache.commons.math3.linear.LUDecomposition;
+import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.stat.correlation.Covariance;
 
@@ -33,7 +36,7 @@ public class Main {
 	static String rutaTraining=workspace + "r8-train-stemmed.txt";
 	static String rutaTest=workspace + "r8-test-stemmed.txt";
 	static String rutaClases=workspace + "clases_noticias.txt";
-	static int numeroCaracteristicas = 300;
+	static int numeroCaracteristicas = 30; //parametrizado
 	static int numeroNoticiasTraining=5485;
 	static int numeroAcqTraining=1596;
 	static int numeroCrudeTraining=253;
@@ -84,14 +87,19 @@ public class Main {
 	static double [][] matrizCaracteristicasTestMoneyFx = new double[numeroMoneyFxTest][numeroCaracteristicas];
 	static double [][] matrizCaracteristicasTestShip = new double[numeroShipTest][numeroCaracteristicas];
 	static double [][] matrizCaracteristicasTestTrade = new double[numeroTradeTest][numeroCaracteristicas];	
-	
-	
-	
+	static int [][] matrizConfusion= new int[8][8];
+		
 	public static void main(String[] args) throws Exception{
 		getListaClaves();
 		getVectoresCaracteristicas();
 		getVectoresMedia();
 		getMatricesCovarianza();
+		getVectoresCarateristicasTest();
+		getMatrizConfusion();
+		
+		
+		
+		
 		
 //		System.out.println("Running a demonstrational program on some sample data ...");
 //        Matrix trainingData = new Matrix(matrizCaracteristicasTrainAcq);
@@ -110,6 +118,251 @@ public class Main {
 //            }
 //            System.out.println("");
 //        }
+	}
+	
+	public static void getMatrizConfusion() {
+		int clase;
+		double acq, crude, earn, grain, interest, moneyfx, ship, trade;
+		double mayor;
+		double [][] x= new double[numeroCaracteristicas][1];		
+		for(int c=0; c<numeroAcqTest; c++) {
+			for(int i=0; i<numeroCaracteristicas; i++) {
+				x[i][0]=matrizCaracteristicasTestAcq[c][i];
+			}
+			acq=funcionClasificadoraAcq(x);
+			crude=funcionClasificadoraCrude(x);
+			earn=funcionClasificadoraEarn(x);
+			grain=funcionClasificadoraGrain(x);
+			interest=funcionClasificadoraInterest(x);
+			moneyfx=funcionClasificadoraMoneyFx(x);
+			ship=funcionClasificadoraShip(x);
+			trade=funcionClasificadoraTrade(x);
+			mayor=getMayor(acq, crude, earn, grain, interest, moneyfx, ship, trade);
+			
+			//matrizConfusion[0][]=
+		}
+		
+		
+		
+	}
+	
+	public static double getMayor(double acq, double crude, double earn, double grain, double interest, double moneyfx, double ship, double trade) {
+		
+		
+		return 0;
+	}
+	
+	public static void getVectoresCarateristicasTest() throws Exception {
+		System.out.println("Encontrando vectores caracteristicas de todas las noticias test ...");
+		int cuentaAcq=0, cuentaCrude=0, cuentaEarn=0, cuentaGrain=0, cuentaInterest=0, cuentaMoneyFx=0, cuentaShip=0, cuentaTrade=0;
+		FileInputStream archTraining = new FileInputStream(rutaTest);
+		DataInputStream entrada = new DataInputStream(archTraining);
+		BufferedReader buffer = new BufferedReader(new InputStreamReader(entrada));	
+		String strLinea;
+		Random r = new Random();
+		for(int i=0; i<numeroNoticiasTest && (strLinea = buffer.readLine()) != null; i++) {										
+			if(strLinea.contains(clasesList.get(0)+"\t")) {				
+				for(int j=0; j<numeroCaracteristicas; j++)
+					matrizCaracteristicasTestAcq[cuentaAcq][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaAcq++;
+				continue;
+			}
+			if(strLinea.contains(clasesList.get(1)+"\t")) {
+				for(int j=0; j<numeroCaracteristicas; j++)
+					matrizCaracteristicasTestCrude[cuentaCrude][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaCrude++;
+				continue;
+			}
+			if(strLinea.contains(clasesList.get(2)+"\t")) {
+				for(int j=0; j<numeroCaracteristicas; j++)
+					matrizCaracteristicasTestEarn[cuentaEarn][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaEarn++;
+				continue;
+			}
+			if(strLinea.contains(clasesList.get(3)+"\t")) {
+				for(int j=0; j<numeroCaracteristicas; j++)
+					matrizCaracteristicasTestGrain[cuentaGrain][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaGrain++;
+				continue;
+			}
+			if(strLinea.contains(clasesList.get(4)+"\t")) {
+				for(int j=0; j<numeroCaracteristicas; j++)
+					matrizCaracteristicasTestInterest[cuentaInterest][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaInterest++;
+				continue;
+			}
+			if(strLinea.contains(clasesList.get(5)+"\t")) {
+				for(int j=0; j<numeroCaracteristicas; j++)
+					matrizCaracteristicasTestMoneyFx[cuentaMoneyFx][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaMoneyFx++;
+				continue;
+			}
+			if(strLinea.contains(clasesList.get(6)+"\t")) {
+				for(int j=0; j<numeroCaracteristicas; j++)
+					matrizCaracteristicasTestShip[cuentaShip][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaShip++;
+				continue;
+			}
+			if(strLinea.contains(clasesList.get(7)+"\t")) {
+				for(int j=0; j<numeroCaracteristicas; j++)
+					matrizCaracteristicasTestTrade[cuentaTrade][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+				cuentaTrade++;
+				continue;
+			}
+		}
+		entrada.close();
+	}
+	
+	public static double funcionClasificadoraAcq(double [][] x) {		
+		RealMatrix vectorMedia = MatrixUtils.createRealMatrix(vectorMediaAcq);
+    	RealMatrix matrizCovarianza = MatrixUtils.createRealMatrix(matrizCovarianzaAcq);    	   	    	
+    	RealMatrix matrizCovInv = new LUDecomposition(matrizCovarianza).getSolver().getInverse();
+    	RealMatrix vector = MatrixUtils.createRealMatrix(x);
+    	RealMatrix subsMatriz = vector.subtract(vectorMedia);    	
+    	RealMatrix transp = subsMatriz.transpose();
+    	double determ = new LUDecomposition(matrizCovarianza).getDeterminant();
+    	int d = numeroCaracteristicas;
+    	RealMatrix mult1 = matrizCovInv.preMultiply(transp);
+    	RealMatrix mult2 = subsMatriz.preMultiply(mult1);
+    	double[][]data = mult2.getData();
+    	double valor = 2*3.141591;
+    	double logarit = new Log().value(valor);
+    	double logarit2 = new Log().value(determ);
+    	    	
+		return -1*0.5*data[0][0] - (d/2)*logarit - 0.5*logarit2+100;
+	}
+	
+	public static double funcionClasificadoraCrude(double [][] x) {		
+		RealMatrix vectorMedia = MatrixUtils.createRealMatrix(vectorMediaCrude);
+    	RealMatrix matrizCovarianza = MatrixUtils.createRealMatrix(matrizCovarianzaCrude);    	   	    	
+    	RealMatrix matrizCovInv = new LUDecomposition(matrizCovarianza).getSolver().getInverse();
+    	RealMatrix vector = MatrixUtils.createRealMatrix(x);
+    	RealMatrix subsMatriz = vector.subtract(vectorMedia);    	
+    	RealMatrix transp = subsMatriz.transpose();
+    	double determ = new LUDecomposition(matrizCovarianza).getDeterminant();
+    	int d = numeroCaracteristicas;
+    	RealMatrix mult1 = matrizCovInv.preMultiply(transp);
+    	RealMatrix mult2 = subsMatriz.preMultiply(mult1);
+    	double[][]data = mult2.getData();
+    	double valor = 2*3.141591;
+    	double logarit = new Log().value(valor);
+    	double logarit2 = new Log().value(determ);
+    	    	
+		return -1*0.5*data[0][0] - (d/2)*logarit - 0.5*logarit2+100;
+	}
+	
+	public static double funcionClasificadoraEarn(double [][] x) {		
+		RealMatrix vectorMedia = MatrixUtils.createRealMatrix(vectorMediaEarn);
+    	RealMatrix matrizCovarianza = MatrixUtils.createRealMatrix(matrizCovarianzaEarn);    	   	    	
+    	RealMatrix matrizCovInv = new LUDecomposition(matrizCovarianza).getSolver().getInverse();
+    	RealMatrix vector = MatrixUtils.createRealMatrix(x);
+    	RealMatrix subsMatriz = vector.subtract(vectorMedia);    	
+    	RealMatrix transp = subsMatriz.transpose();
+    	double determ = new LUDecomposition(matrizCovarianza).getDeterminant();
+    	int d = numeroCaracteristicas;
+    	RealMatrix mult1 = matrizCovInv.preMultiply(transp);
+    	RealMatrix mult2 = subsMatriz.preMultiply(mult1);
+    	double[][]data = mult2.getData();
+    	double valor = 2*3.141591;
+    	double logarit = new Log().value(valor);
+    	double logarit2 = new Log().value(determ);
+    	    	
+		return -1*0.5*data[0][0] - (d/2)*logarit - 0.5*logarit2+100;
+	}
+	
+	public static double funcionClasificadoraGrain(double [][] x) {		
+		RealMatrix vectorMedia = MatrixUtils.createRealMatrix(vectorMediaGrain);
+    	RealMatrix matrizCovarianza = MatrixUtils.createRealMatrix(matrizCovarianzaGrain);    	   	    	
+    	RealMatrix matrizCovInv = new LUDecomposition(matrizCovarianza).getSolver().getInverse();
+    	RealMatrix vector = MatrixUtils.createRealMatrix(x);
+    	RealMatrix subsMatriz = vector.subtract(vectorMedia);    	
+    	RealMatrix transp = subsMatriz.transpose();
+    	double determ = new LUDecomposition(matrizCovarianza).getDeterminant();
+    	int d = numeroCaracteristicas;
+    	RealMatrix mult1 = matrizCovInv.preMultiply(transp);
+    	RealMatrix mult2 = subsMatriz.preMultiply(mult1);
+    	double[][]data = mult2.getData();
+    	double valor = 2*3.141591;
+    	double logarit = new Log().value(valor);
+    	double logarit2 = new Log().value(determ);
+    	    	
+		return -1*0.5*data[0][0] - (d/2)*logarit - 0.5*logarit2+100;
+	}
+	
+	public static double funcionClasificadoraInterest(double [][] x) {		
+		RealMatrix vectorMedia = MatrixUtils.createRealMatrix(vectorMediaInterest);
+    	RealMatrix matrizCovarianza = MatrixUtils.createRealMatrix(matrizCovarianzaInterest);    	   	    	
+    	RealMatrix matrizCovInv = new LUDecomposition(matrizCovarianza).getSolver().getInverse();
+    	RealMatrix vector = MatrixUtils.createRealMatrix(x);
+    	RealMatrix subsMatriz = vector.subtract(vectorMedia);    	
+    	RealMatrix transp = subsMatriz.transpose();
+    	double determ = new LUDecomposition(matrizCovarianza).getDeterminant();
+    	int d = numeroCaracteristicas;
+    	RealMatrix mult1 = matrizCovInv.preMultiply(transp);
+    	RealMatrix mult2 = subsMatriz.preMultiply(mult1);
+    	double[][]data = mult2.getData();
+    	double valor = 2*3.141591;
+    	double logarit = new Log().value(valor);
+    	double logarit2 = new Log().value(determ);
+    	    	
+		return -1*0.5*data[0][0] - (d/2)*logarit - 0.5*logarit2+100;
+	}
+	
+	public static double funcionClasificadoraMoneyFx(double [][] x) {		
+		RealMatrix vectorMedia = MatrixUtils.createRealMatrix(vectorMediaMoneyFx);
+    	RealMatrix matrizCovarianza = MatrixUtils.createRealMatrix(matrizCovarianzaMoneyFx);    	   	    	
+    	RealMatrix matrizCovInv = new LUDecomposition(matrizCovarianza).getSolver().getInverse();
+    	RealMatrix vector = MatrixUtils.createRealMatrix(x);
+    	RealMatrix subsMatriz = vector.subtract(vectorMedia);    	
+    	RealMatrix transp = subsMatriz.transpose();
+    	double determ = new LUDecomposition(matrizCovarianza).getDeterminant();
+    	int d = numeroCaracteristicas;
+    	RealMatrix mult1 = matrizCovInv.preMultiply(transp);
+    	RealMatrix mult2 = subsMatriz.preMultiply(mult1);
+    	double[][]data = mult2.getData();
+    	double valor = 2*3.141591;
+    	double logarit = new Log().value(valor);
+    	double logarit2 = new Log().value(determ);
+    	    	
+		return -1*0.5*data[0][0] - (d/2)*logarit - 0.5*logarit2+100;
+	}
+	
+	public static double funcionClasificadoraShip(double [][] x) {		
+		RealMatrix vectorMedia = MatrixUtils.createRealMatrix(vectorMediaShip);
+    	RealMatrix matrizCovarianza = MatrixUtils.createRealMatrix(matrizCovarianzaShip);    	   	    	
+    	RealMatrix matrizCovInv = new LUDecomposition(matrizCovarianza).getSolver().getInverse();
+    	RealMatrix vector = MatrixUtils.createRealMatrix(x);
+    	RealMatrix subsMatriz = vector.subtract(vectorMedia);    	
+    	RealMatrix transp = subsMatriz.transpose();
+    	double determ = new LUDecomposition(matrizCovarianza).getDeterminant();
+    	int d = numeroCaracteristicas;
+    	RealMatrix mult1 = matrizCovInv.preMultiply(transp);
+    	RealMatrix mult2 = subsMatriz.preMultiply(mult1);
+    	double[][]data = mult2.getData();
+    	double valor = 2*3.141591;
+    	double logarit = new Log().value(valor);
+    	double logarit2 = new Log().value(determ);
+    	    	
+		return -1*0.5*data[0][0] - (d/2)*logarit - 0.5*logarit2+100;
+	}
+	
+	public static double funcionClasificadoraTrade(double [][] x) {		
+		RealMatrix vectorMedia = MatrixUtils.createRealMatrix(vectorMediaTrade);
+    	RealMatrix matrizCovarianza = MatrixUtils.createRealMatrix(matrizCovarianzaTrade);    	   	    	
+    	RealMatrix matrizCovInv = new LUDecomposition(matrizCovarianza).getSolver().getInverse();
+    	RealMatrix vector = MatrixUtils.createRealMatrix(x);
+    	RealMatrix subsMatriz = vector.subtract(vectorMedia);    	
+    	RealMatrix transp = subsMatriz.transpose();
+    	double determ = new LUDecomposition(matrizCovarianza).getDeterminant();
+    	int d = numeroCaracteristicas;
+    	RealMatrix mult1 = matrizCovInv.preMultiply(transp);
+    	RealMatrix mult2 = subsMatriz.preMultiply(mult1);
+    	double[][]data = mult2.getData();
+    	double valor = 2*3.141591;
+    	double logarit = new Log().value(valor);
+    	double logarit2 = new Log().value(determ);
+    	    	
+		return -1*0.5*data[0][0] - (d/2)*logarit - 0.5*logarit2+100;
 	}
 	
 	public static void getMatricesCovarianza() {
@@ -218,7 +471,7 @@ public class Main {
 	}
 	
 	public static void getVectoresCaracteristicas() throws Exception{
-		System.out.println("Encontrando vectores caracteristicas de todas las noticias ...");
+		System.out.println("Encontrando vectores caracteristicas de todas las noticias train ...");
 		int cuentaAcq=0, cuentaCrude=0, cuentaEarn=0, cuentaGrain=0, cuentaInterest=0, cuentaMoneyFx=0, cuentaShip=0, cuentaTrade=0;
 		FileInputStream archTraining = new FileInputStream(rutaTraining);
 		DataInputStream entrada = new DataInputStream(archTraining);
