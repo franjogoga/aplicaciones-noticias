@@ -123,8 +123,15 @@ public class Main {
 	public static void getMatrizConfusion() {
 		int clase;
 		double acq, crude, earn, grain, interest, moneyfx, ship, trade;
-		double mayor;
-		double [][] x= new double[numeroCaracteristicas][1];		
+		double mayor;		
+		double [][] x= new double[numeroCaracteristicas][1];
+		
+		for(int i=0; i<8; i++) {
+			for(int j=0; j<8; j++) {
+				matrizConfusion[i][j]=0;
+			}
+		}
+				
 		for(int c=0; c<numeroAcqTest; c++) {
 			for(int i=0; i<numeroCaracteristicas; i++) {
 				x[i][0]=matrizCaracteristicasTestAcq[c][i];
@@ -146,10 +153,32 @@ public class Main {
 			if (mayor==interest) matrizConfusion[0][4]=matrizConfusion[0][4]+1;;
 			if (mayor==moneyfx) matrizConfusion[0][5]=matrizConfusion[0][5]+1;
 			if (mayor==ship) matrizConfusion[0][6]=matrizConfusion[0][6]+1;;
-			if (mayor==trade) matrizConfusion[0][7]=matrizConfusion[0][7]+1;			
+			if (mayor==trade) matrizConfusion[0][7]=matrizConfusion[0][7]+1;	
 		}
 		
-		
+		for(int c=0; c<numeroCrudeTest; c++) {
+			for(int i=0; i<numeroCaracteristicas; i++) {
+				x[i][0]=matrizCaracteristicasTestCrude[c][i];
+			}
+			acq=funcionClasificadoraAcq(x);
+			crude=funcionClasificadoraCrude(x);
+			earn=funcionClasificadoraEarn(x);
+			grain=funcionClasificadoraGrain(x);
+			interest=funcionClasificadoraInterest(x);
+			moneyfx=funcionClasificadoraMoneyFx(x);
+			ship=funcionClasificadoraShip(x);
+			trade=funcionClasificadoraTrade(x);
+			mayor=getMayor(acq, crude, earn, grain, interest, moneyfx, ship, trade);
+			
+			if (mayor==acq) matrizConfusion[1][0]=matrizConfusion[1][0]+1;
+			if (mayor==crude) matrizConfusion[1][1]=matrizConfusion[1][1]+1;;
+			if (mayor==earn) matrizConfusion[1][2]=matrizConfusion[1][2]+1;;
+			if (mayor==grain) matrizConfusion[1][3]=matrizConfusion[1][3]+1;;
+			if (mayor==interest) matrizConfusion[1][4]=matrizConfusion[1][4]+1;;
+			if (mayor==moneyfx) matrizConfusion[1][5]=matrizConfusion[1][5]+1;
+			if (mayor==ship) matrizConfusion[1][6]=matrizConfusion[1][6]+1;;
+			if (mayor==trade) matrizConfusion[1][7]=matrizConfusion[1][7]+1;	
+		}
 		
 		
 		
