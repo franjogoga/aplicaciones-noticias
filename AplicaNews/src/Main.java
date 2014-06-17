@@ -180,7 +180,149 @@ public class Main {
 			if (mayor==trade) matrizConfusion[1][7]=matrizConfusion[1][7]+1;	
 		}
 		
+		for(int c=0; c<numeroEarnTest; c++) {
+			for(int i=0; i<numeroCaracteristicas; i++) {
+				x[i][0]=matrizCaracteristicasTestEarn[c][i];
+			}
+			acq=funcionClasificadoraAcq(x);
+			crude=funcionClasificadoraCrude(x);
+			earn=funcionClasificadoraEarn(x);
+			grain=funcionClasificadoraGrain(x);
+			interest=funcionClasificadoraInterest(x);
+			moneyfx=funcionClasificadoraMoneyFx(x);
+			ship=funcionClasificadoraShip(x);
+			trade=funcionClasificadoraTrade(x);
+			mayor=getMayor(acq, crude, earn, grain, interest, moneyfx, ship, trade);
+			
+			if (mayor==acq) matrizConfusion[2][0]=matrizConfusion[2][0]+1;
+			if (mayor==crude) matrizConfusion[2][1]=matrizConfusion[2][1]+1;;
+			if (mayor==earn) matrizConfusion[2][2]=matrizConfusion[2][2]+1;;
+			if (mayor==grain) matrizConfusion[2][3]=matrizConfusion[2][3]+1;;
+			if (mayor==interest) matrizConfusion[2][4]=matrizConfusion[2][4]+1;;
+			if (mayor==moneyfx) matrizConfusion[2][5]=matrizConfusion[2][5]+1;
+			if (mayor==ship) matrizConfusion[2][6]=matrizConfusion[2][6]+1;;
+			if (mayor==trade) matrizConfusion[2][7]=matrizConfusion[2][7]+1;	
+		}
 		
+		for(int c=0; c<numeroGrainTest; c++) {
+			for(int i=0; i<numeroCaracteristicas; i++) {
+				x[i][0]=matrizCaracteristicasTestGrain[c][i];
+			}
+			acq=funcionClasificadoraAcq(x);
+			crude=funcionClasificadoraCrude(x);
+			earn=funcionClasificadoraEarn(x);
+			grain=funcionClasificadoraGrain(x);
+			interest=funcionClasificadoraInterest(x);
+			moneyfx=funcionClasificadoraMoneyFx(x);
+			ship=funcionClasificadoraShip(x);
+			trade=funcionClasificadoraTrade(x);
+			mayor=getMayor(acq, crude, earn, grain, interest, moneyfx, ship, trade);
+			
+			if (mayor==acq) matrizConfusion[3][0]=matrizConfusion[3][0]+1;
+			if (mayor==crude) matrizConfusion[3][1]=matrizConfusion[3][1]+1;;
+			if (mayor==earn) matrizConfusion[3][2]=matrizConfusion[3][2]+1;;
+			if (mayor==grain) matrizConfusion[3][3]=matrizConfusion[3][3]+1;;
+			if (mayor==interest) matrizConfusion[3][4]=matrizConfusion[3][4]+1;;
+			if (mayor==moneyfx) matrizConfusion[3][5]=matrizConfusion[3][5]+1;
+			if (mayor==ship) matrizConfusion[3][6]=matrizConfusion[3][6]+1;;
+			if (mayor==trade) matrizConfusion[3][7]=matrizConfusion[3][7]+1;	
+		}
+		
+		for(int c=0; c<numeroInterestTest; c++) {
+			for(int i=0; i<numeroCaracteristicas; i++) {
+				x[i][0]=matrizCaracteristicasTestInterest[c][i];
+			}
+			acq=funcionClasificadoraAcq(x);
+			crude=funcionClasificadoraCrude(x);
+			earn=funcionClasificadoraEarn(x);
+			grain=funcionClasificadoraGrain(x);
+			interest=funcionClasificadoraInterest(x);
+			moneyfx=funcionClasificadoraMoneyFx(x);
+			ship=funcionClasificadoraShip(x);
+			trade=funcionClasificadoraTrade(x);
+			mayor=getMayor(acq, crude, earn, grain, interest, moneyfx, ship, trade);
+			
+			if (mayor==acq) matrizConfusion[4][0]=matrizConfusion[4][0]+1;
+			if (mayor==crude) matrizConfusion[4][1]=matrizConfusion[4][1]+1;;
+			if (mayor==earn) matrizConfusion[4][2]=matrizConfusion[4][2]+1;;
+			if (mayor==grain) matrizConfusion[4][3]=matrizConfusion[4][3]+1;;
+			if (mayor==interest) matrizConfusion[4][4]=matrizConfusion[4][4]+1;;
+			if (mayor==moneyfx) matrizConfusion[4][5]=matrizConfusion[4][5]+1;
+			if (mayor==ship) matrizConfusion[4][6]=matrizConfusion[4][6]+1;;
+			if (mayor==trade) matrizConfusion[4][7]=matrizConfusion[4][7]+1;	
+		}
+		
+		for(int c=0; c<numeroMoneyFxTest; c++) {
+			for(int i=0; i<numeroCaracteristicas; i++) {
+				x[i][0]=matrizCaracteristicasTestMoneyFx[c][i];
+			}
+			acq=funcionClasificadoraAcq(x);
+			crude=funcionClasificadoraCrude(x);
+			earn=funcionClasificadoraEarn(x);
+			grain=funcionClasificadoraGrain(x);
+			interest=funcionClasificadoraInterest(x);
+			moneyfx=funcionClasificadoraMoneyFx(x);
+			ship=funcionClasificadoraShip(x);
+			trade=funcionClasificadoraTrade(x);
+			mayor=getMayor(acq, crude, earn, grain, interest, moneyfx, ship, trade);
+			
+			if (mayor==acq) matrizConfusion[5][0]=matrizConfusion[5][0]+1;
+			if (mayor==crude) matrizConfusion[5][1]=matrizConfusion[5][1]+1;;
+			if (mayor==earn) matrizConfusion[5][2]=matrizConfusion[5][2]+1;;
+			if (mayor==grain) matrizConfusion[5][3]=matrizConfusion[5][3]+1;;
+			if (mayor==interest) matrizConfusion[5][4]=matrizConfusion[5][4]+1;;
+			if (mayor==moneyfx) matrizConfusion[5][5]=matrizConfusion[5][5]+1;
+			if (mayor==ship) matrizConfusion[5][6]=matrizConfusion[5][6]+1;;
+			if (mayor==trade) matrizConfusion[5][7]=matrizConfusion[5][7]+1;	
+		}
+		
+		for(int c=0; c<numeroShipTest; c++) {
+			for(int i=0; i<numeroCaracteristicas; i++) {
+				x[i][0]=matrizCaracteristicasTestShip[c][i];
+			}
+			acq=funcionClasificadoraAcq(x);
+			crude=funcionClasificadoraCrude(x);
+			earn=funcionClasificadoraEarn(x);
+			grain=funcionClasificadoraGrain(x);
+			interest=funcionClasificadoraInterest(x);
+			moneyfx=funcionClasificadoraMoneyFx(x);
+			ship=funcionClasificadoraShip(x);
+			trade=funcionClasificadoraTrade(x);
+			mayor=getMayor(acq, crude, earn, grain, interest, moneyfx, ship, trade);
+			
+			if (mayor==acq) matrizConfusion[6][0]=matrizConfusion[6][0]+1;
+			if (mayor==crude) matrizConfusion[6][1]=matrizConfusion[6][1]+1;;
+			if (mayor==earn) matrizConfusion[6][2]=matrizConfusion[6][2]+1;;
+			if (mayor==grain) matrizConfusion[6][3]=matrizConfusion[6][3]+1;;
+			if (mayor==interest) matrizConfusion[6][4]=matrizConfusion[6][4]+1;;
+			if (mayor==moneyfx) matrizConfusion[6][5]=matrizConfusion[6][5]+1;
+			if (mayor==ship) matrizConfusion[6][6]=matrizConfusion[6][6]+1;;
+			if (mayor==trade) matrizConfusion[6][7]=matrizConfusion[6][7]+1;	
+		}
+		
+		for(int c=0; c<numeroTradeTest; c++) {
+			for(int i=0; i<numeroCaracteristicas; i++) {
+				x[i][0]=matrizCaracteristicasTestTrade[c][i];
+			}
+			acq=funcionClasificadoraAcq(x);
+			crude=funcionClasificadoraCrude(x);
+			earn=funcionClasificadoraEarn(x);
+			grain=funcionClasificadoraGrain(x);
+			interest=funcionClasificadoraInterest(x);
+			moneyfx=funcionClasificadoraMoneyFx(x);
+			ship=funcionClasificadoraShip(x);
+			trade=funcionClasificadoraTrade(x);
+			mayor=getMayor(acq, crude, earn, grain, interest, moneyfx, ship, trade);
+			
+			if (mayor==acq) matrizConfusion[7][0]=matrizConfusion[7][0]+1;
+			if (mayor==crude) matrizConfusion[7][1]=matrizConfusion[7][1]+1;;
+			if (mayor==earn) matrizConfusion[7][2]=matrizConfusion[7][2]+1;;
+			if (mayor==grain) matrizConfusion[7][3]=matrizConfusion[7][3]+1;;
+			if (mayor==interest) matrizConfusion[7][4]=matrizConfusion[7][4]+1;;
+			if (mayor==moneyfx) matrizConfusion[7][5]=matrizConfusion[7][5]+1;
+			if (mayor==ship) matrizConfusion[7][6]=matrizConfusion[7][6]+1;;
+			if (mayor==trade) matrizConfusion[7][7]=matrizConfusion[7][7]+1;	
+		}
 		
 	}	
 	
