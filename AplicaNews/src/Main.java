@@ -139,17 +139,31 @@ public class Main {
 			trade=funcionClasificadoraTrade(x);
 			mayor=getMayor(acq, crude, earn, grain, interest, moneyfx, ship, trade);
 			
-			//matrizConfusion[0][]=
+			if (mayor==acq) matrizConfusion[0][0]=matrizConfusion[0][0]+1;
+			if (mayor==crude) matrizConfusion[0][1]=matrizConfusion[0][1]+1;;
+			if (mayor==earn) matrizConfusion[0][2]=matrizConfusion[0][2]+1;;
+			if (mayor==grain) matrizConfusion[0][3]=matrizConfusion[0][3]+1;;
+			if (mayor==interest) matrizConfusion[0][4]=matrizConfusion[0][4]+1;;
+			if (mayor==moneyfx) matrizConfusion[0][5]=matrizConfusion[0][5]+1;
+			if (mayor==ship) matrizConfusion[0][6]=matrizConfusion[0][6]+1;;
+			if (mayor==trade) matrizConfusion[0][7]=matrizConfusion[0][7]+1;			
 		}
 		
 		
 		
-	}
+		
+		
+	}	
 	
 	public static double getMayor(double acq, double crude, double earn, double grain, double interest, double moneyfx, double ship, double trade) {
-		
-		
-		return 0;
+		double mayor=Math.max(acq, crude);
+		mayor=Math.max(mayor, earn);
+		mayor=Math.max(mayor, grain);
+		mayor=Math.max(mayor, interest);
+		mayor=Math.max(mayor, moneyfx);
+		mayor=Math.max(mayor, ship);
+		mayor=Math.max(mayor, trade);
+		return mayor;
 	}
 	
 	public static void getVectoresCarateristicasTest() throws Exception {
