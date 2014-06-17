@@ -33,10 +33,10 @@ public class Main {
 	static ArrayList<String> clasesList = new ArrayList<String>();
 	static ArrayList<String> clavesList= new ArrayList<String>();
 	static String workspace="/home/jonatan/workspace/";
-	static String rutaTraining=workspace + "r8-train-stemmed.txt";
-	static String rutaTest=workspace + "r8-test-stemmed.txt";
+	static String rutaTraining=workspace + "r8-train-no-stop.txt";
+	static String rutaTest=workspace + "r8-test-no-stop.txt";
 	static String rutaClases=workspace + "clases_noticias.txt";
-	static int numeroCaracteristicas = 100; //parametrizado
+	static int numeroCaracteristicas = 3000; //parametrizado
 	static int numeroNoticiasTraining=5485;
 	static int numeroAcqTraining=1596;
 	static int numeroCrudeTraining=253;
@@ -97,7 +97,7 @@ public class Main {
 		getVectoresCarateristicasTest();
 		getMatrizConfusion();
 		imprimirMatrizConfusion();
-		
+		getIndiceAcierto();
 		
 		
 		
@@ -118,6 +118,17 @@ public class Main {
 //            }
 //            System.out.println("");
 //        }
+	}
+	
+	public static void getIndiceAcierto() {
+		System.out.print("Indice de acierto : ");
+		double indice=0;
+		for(int i=0; i<8; i++) {
+			for(int j=0; j<8; j++) {
+				if (i==j) indice+=matrizConfusion[i][j];				
+			}			
+		}
+		System.out.println(indice/numeroNoticiasTest);
 	}
 	
 	public static void imprimirMatrizConfusion() {
@@ -376,31 +387,31 @@ public class Main {
 			}
 			if(strLinea.contains(clasesList.get(3)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasTestGrain[cuentaGrain][j] = r.nextFloat()/100.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTestGrain[cuentaGrain][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaGrain++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(4)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasTestInterest[cuentaInterest][j] = r.nextFloat()/100.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTestInterest[cuentaInterest][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaInterest++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(5)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasTestMoneyFx[cuentaMoneyFx][j] = r.nextFloat()/100.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTestMoneyFx[cuentaMoneyFx][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaMoneyFx++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(6)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasTestShip[cuentaShip][j] = r.nextFloat()/100.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTestShip[cuentaShip][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaShip++;
 				continue;
 			}
 			if(strLinea.contains(clasesList.get(7)+"\t")) {
 				for(int j=0; j<numeroCaracteristicas; j++)
-					matrizCaracteristicasTestTrade[cuentaTrade][j] = r.nextFloat()/100.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
+					matrizCaracteristicasTestTrade[cuentaTrade][j] = r.nextFloat()/1000.0 +StringUtils.countMatches(strLinea, clavesList.get(j));				
 				cuentaTrade++;
 				continue;
 			}
